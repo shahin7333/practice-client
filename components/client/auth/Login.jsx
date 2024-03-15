@@ -75,24 +75,14 @@ const Login = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-3.5 w-3.5 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="pl-3 block text-sm leading-6 text-gray-900 cursor-pointer"
-                >
-                  Remember me
-                </label>
-              </div>
+              <p className="text-xs md:text-sm">Don't have an account?</p>
 
               <div className="text-sm leading-6">
-                <Link href="#" className="font-medium text-indigo-600">
-                  Forgot password?
+                <Link
+                  href="/auth/registration"
+                  className="text-xs md:text-sm font-medium text-indigo-600"
+                >
+                  Registration Now
                 </Link>
               </div>
             </div>
