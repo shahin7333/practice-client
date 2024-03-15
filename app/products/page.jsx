@@ -1,10 +1,8 @@
 "use client";
 import ProductList from "@/components/common/ProductList";
-import Banner from "@/components/home/Banner";
-import Incentives from "@/components/home/Incentives";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Home() {
+const page = () => {
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -53,24 +51,20 @@ export default function Home() {
     // More products...
   ]);
   return (
-    <main className="">
-      <Banner />
-      <ProductList
-        data={products}
-        title="Featured products"
-        des="Highlighting its main purpose and key features"
-      />
+    <>
       <ProductList
         data={products}
         title="Latest products"
+        total={products.length}
         des="Highlighting its main purpose and key features"
       />
       <ProductList
         data={products}
-        title="Hot deals"
+        title="Similar products"
         des="Highlighting its main purpose and key features"
       />
-      <Incentives />
-    </main>
+    </>
   );
-}
+};
+
+export default page;
