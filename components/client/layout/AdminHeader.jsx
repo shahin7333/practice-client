@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Header = () => {
+const AdminHeader = () => {
   const navigation = [
     { name: "Product", href: "/products" },
     { name: "FAQ", href: "/" },
@@ -22,25 +22,8 @@ const Header = () => {
   };
   return (
     <nav className="max-w-[1440px] mx-auto sticky top-0 bg-white z-100">
-      <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 xl:px-20 h-16 border-b shadow">
-        <div>
-          <img
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-            alt="Your Company"
-            className="h-8 w-auto"
-          />
-        </div>
-        <div className="hidden sm:block text-sm">
-          <ul className="flex space-x-4">
-            {navigation.map((item, index) => (
-              <li key={index}>
-                <Link href={item.href} className="">
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="flex justify-between items-center px-4 sm:px-6 h-16 border-b shadow">
+        <h1 className="text-2xl font-semibold">Admin Panel</h1>
         <div className="flex gap-4 items-center">
           <Link href="/auth/login" className="text-sm hidden md:block">
             Login
@@ -183,4 +166,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AdminHeader;
