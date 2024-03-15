@@ -173,19 +173,14 @@ const ProductDetails = () => {
             <div className="mt-4">
               <p className="text-sm text-gray-700">{product.description}</p>
             </div>
-
-            <form className="mt-6">
-              {/* Colors */}
-
-              <div className="mt-10">
-                <button
-                  type="submit"
-                  className=" bg-indigo-600 px-8 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                >
-                  Add to cart
-                </button>
-              </div>
-            </form>
+            <div className="mt-10">
+              <button
+                type="submit"
+                className=" bg-indigo-600 px-8 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+              >
+                Add to cart
+              </button>
+            </div>
 
             <section aria-labelledby="details-heading" className="mt-12">
               <h2 id="details-heading" className="sr-only">
