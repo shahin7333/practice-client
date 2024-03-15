@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import ProductList from "../common/ProductList";
 
 const product = {
   name: "Zip Tote Basket",
@@ -59,9 +60,56 @@ function classNames(...classes) {
 }
 
 const ProductDetails = () => {
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "Organize Basic Set (Walnut)",
+      price: "$149",
+      rating: 5,
+      reviewCount: 38,
+      imageSrc:
+        "https://tailwindui.com/img/ecommerce-images/category-page-05-image-card-01.jpg",
+      imageAlt: "TODO",
+      href: "#",
+    },
+    {
+      id: 2,
+      name: "Organize Pen Holder",
+      price: "$15",
+      rating: 5,
+      reviewCount: 18,
+      imageSrc:
+        "https://tailwindui.com/img/ecommerce-images/category-page-05-image-card-02.jpg",
+      imageAlt: "TODO",
+      href: "#",
+    },
+    {
+      id: 3,
+      name: "Organize Sticky Note Holder",
+      price: "$15",
+      rating: 5,
+      reviewCount: 14,
+      imageSrc:
+        "https://tailwindui.com/img/ecommerce-images/category-page-05-image-card-03.jpg",
+      imageAlt: "TODO",
+      href: "#",
+    },
+    {
+      id: 4,
+      name: "Organize Phone Holder",
+      price: "$15",
+      rating: 4,
+      reviewCount: 21,
+      imageSrc:
+        "https://tailwindui.com/img/ecommerce-images/category-page-05-image-card-04.jpg",
+      imageAlt: "TODO",
+      href: "#",
+    },
+    // More products...
+  ]);
   return (
-    <div className="bg-white">
-      <div className="mx-auto p-4 sm:p-6 lg:p-8 xl:px-20 lg:max-w-[1440px]">
+    <>
+      <div className="mx-auto p-4 sm:p-6 lg:p-8 xl:p-20 lg:max-w-[1440px]">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}
           <Tab.Group as="div" className="flex flex-col-reverse">
@@ -193,7 +241,12 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+      <ProductList
+        data={products}
+        title="Similar products"
+        des="Highlighting its main purpose and key features"
+      />
+    </>
   );
 };
 

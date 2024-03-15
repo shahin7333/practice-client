@@ -6,7 +6,11 @@ function classNames(...classes) {
 }
 const SingleProduct = ({ product }) => {
   return (
-    <div key={product.id} className="border border-gray-200 hover:shadow-md">
+    <Link
+      href={`/products/1`}
+      key={product.id}
+      className="border border-gray-200 hover:shadow-md"
+    >
       <div className="overflow-hidden">
         <img
           src={product.imageSrc}
@@ -38,7 +42,7 @@ const SingleProduct = ({ product }) => {
           {product.price}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
