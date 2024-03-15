@@ -1,7 +1,7 @@
 "use client";
-import ProductList from "@/components/common/ProductList";
-import Banner from "@/components/home/Banner";
-import Incentives from "@/components/home/Incentives";
+import ProductList from "@/components/client/common/ProductList";
+import Banner from "@/components/client/home/Banner";
+import Incentives from "@/components/client/home/Incentives";
 import { useState } from "react";
 
 export default function Home() {
