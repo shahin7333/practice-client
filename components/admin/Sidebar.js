@@ -22,6 +22,7 @@ const AdminSidebar = () => {
                 }`}
             >
               <item.icon
+                className="w-5 h-5"
                 color={
                   pathname === item.subPath[0].href ||
                     (item.subPath[0].href.length > 10 &&

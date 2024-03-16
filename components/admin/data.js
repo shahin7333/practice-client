@@ -1,10 +1,19 @@
-import TagIcon from "../icons/TagIcon";
-import OrderIcon from "../icons/OrderIcon";
+import { Bars3BottomLeftIcon, CircleStackIcon, DocumentArrowUpIcon, HomeIcon, ListBulletIcon } from "@heroicons/react/24/outline";
 
 export const adminSidebarData = [
     {
+        name: "Dashboard",
+        icon: HomeIcon,
+        subPath: [
+            {
+                name: "Dashboard",
+                href: "/admin",
+            }
+        ]
+    },
+    {
         name: "Category",
-        icon: TagIcon,
+        icon: ListBulletIcon,
         subPath: [
             {
                 name: "Category List",
@@ -18,7 +27,7 @@ export const adminSidebarData = [
     },
     {
         name: "Brands",
-        icon: TagIcon,
+        icon: Bars3BottomLeftIcon,
         subPath: [
             {
                 name: "Brand List",
@@ -32,7 +41,7 @@ export const adminSidebarData = [
     },
     {
         name: "Products",
-        icon: TagIcon,
+        icon: CircleStackIcon,
         subPath: [
             {
                 name: "Product List",
@@ -46,7 +55,7 @@ export const adminSidebarData = [
     },
     {
         name: "Order List",
-        icon: OrderIcon,
+        icon: DocumentArrowUpIcon,
         subPath: [
             {
                 name: "Order List",

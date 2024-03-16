@@ -1,5 +1,5 @@
 "use client";
-import ProductList from "@/components/client/common/ProductList";
+import ProductList from "../../components/client/common/ProductList";
 import React, { useState } from "react";
 
 const page = () => {

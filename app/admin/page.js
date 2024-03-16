@@ -1,7 +1,7 @@
 "use client";
-import AdminTable from "@/components/admin/AdminTable";
-import Card from "@/components/admin/Card";
-import React from "react";
+
+import Card from "../../components/admin/Card";
+import AdminTable from "../../components/admin/AdminTable";
 
 const DashboardPage = () => {
   return (

@@ -1,4 +1,4 @@
-import AdminSidebar from "@/components/admin/Sidebar";
+import AdminSidebar from "../../components/admin/Sidebar";
 
 export default async function AboutLayout({ children }) {
   return (
