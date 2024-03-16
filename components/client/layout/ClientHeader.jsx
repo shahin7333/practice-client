@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Header = () => {
+const ClientHeader = () => {
   const navigation = [
     { name: "Product", href: "/products" },
     { name: "FAQ", href: "/faq" },
@@ -183,4 +183,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default ClientHeader;
