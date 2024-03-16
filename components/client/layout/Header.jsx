@@ -12,7 +12,7 @@ function classNames(...classes) {
 const Header = () => {
   const navigation = [
     { name: "Product", href: "/products" },
-    { name: "FAQ", href: "/" },
+    { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/contact" },
   ];
   const [isOpen, setIsOpen] = useState(false);
