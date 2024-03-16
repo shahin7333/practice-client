@@ -1,9 +1,15 @@
-import React from 'react'
+"use client";
+import AdminTable from "@/components/admin/AdminTable";
+import Card from "@/components/admin/Card";
+import React from "react";
 
 const DashboardPage = () => {
-    return (
-        <div>Dashboard Page</div>
-    )
-}
+  return (
+    <>
+      <Card />
+      <AdminTable />
+    </>
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;
