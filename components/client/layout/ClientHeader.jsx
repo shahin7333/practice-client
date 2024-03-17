@@ -2,8 +2,12 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Dialog, Menu, Transition } from "@headlessui/react";
+import {
+  Bars3Icon,
+  ChevronDownIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,16 +25,85 @@ const ClientHeader = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
   return (
     <nav className="sticky top-0 bg-white z-100 border-b shadow">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 xl:px-20 h-16">
-          <div>
-            <img
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-              alt="Your Company"
-              className="h-8 w-auto"
-            />
+          <div className="flex gap-3 items-center">
+            <div>
+              <div className="flex md:hidden">
+                <button type="button" className="" onClick={toggleMenu}>
+                  <Bars3Icon
+                    className="h-5 w-5 text-gray-500"
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
+              <Dialog
+                as="div"
+                className="lg:hidden"
+                open={isOpen}
+                onClose={setIsOpen}
+              >
+                <div className="fixed inset-0 z-50" />
+                <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white sm:max-w-sm">
+                  <div className="flex items-center justify-between shadow h-16 px-4">
+                    <Link
+                      onClick={closeMenu}
+                      href="/"
+                      className="text-md font-bold text-indigo-600"
+                    >
+                      Your Logo
+                    </Link>
+                    <button
+                      type="button"
+                      className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                      onClick={toggleMenu}
+                    >
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  </div>
+                  <div className="mt-4 flow-root px-4">
+                    <div className="">
+                      <div className="space-y-2">
+                        {navigation.map((item) => (
+                          <Link
+                            onClick={closeMenu}
+                            key={item.name}
+                            href={item.href}
+                            className="block text-sm font-medium leading-5 text-gray-900 hover:text-indigo-600"
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="my-4 space-y-2 border-t pt-4">
+                        <Link
+                          onClick={closeMenu}
+                          href="/auth/login"
+                          className="block text-sm font-medium leading-5 text-gray-900 hover:text-indigo-600"
+                        >
+                          Log in
+                        </Link>
+                        <Link
+                          onClick={closeMenu}
+                          href="/auth/registration"
+                          className="block text-sm font-medium leading-5 text-gray-900 hover:text-indigo-600"
+                        >
+                          Registration
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Dialog>
+            </div>
+            <Link href="/" className="text-lg font-bold text-indigo-500 ">
+              Your Logo
+            </Link>
           </div>
           <div className="hidden sm:block text-sm">
             <ul className="flex space-x-4">
@@ -138,7 +211,7 @@ const ClientHeader = () => {
                 </Menu.Items>
               </Transition>
             </Menu>
-            <div className="sm:hidden">
+            {/* <div className="sm:hidden">
               <button onClick={toggleMenu} className="block focus:outline-none">
                 <svg
                   className="h-6 w-6"
@@ -165,22 +238,10 @@ const ClientHeader = () => {
                   )}
                 </svg>
               </button>
-            </div>
+            </div> */}
+            {/* Header */}
           </div>
         </div>
-        {isOpen && (
-          <div className="sm:hidden mt-4 text-sm px-4">
-            <ul className="flex flex-col space-y-2">
-              {navigation.map((item, index) => (
-                <li onClick={toggleMenu} key={index}>
-                  <Link href={item.href} className="block">
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </nav>
   );

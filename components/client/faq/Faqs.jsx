@@ -56,7 +56,7 @@ const Faqs = () => {
         </div>
       </div>
       <div className="mt-8">
-        <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:gap-x-10">
+        <dl className="grid sm:grid-cols-2 gap-6">
           {faqs.map((faq) => (
             <div key={faq.id} className="border p-4 md:p-6">
               <dt className="text-base font-semibold leading-7 text-gray-900">
