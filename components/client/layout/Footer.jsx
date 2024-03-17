@@ -68,8 +68,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white">
-      <div className="mx-auto max-w-[1440px] md:flex md:items-center md:justify-between border-t p-4 sm:p-6 lg:px-8 xl:px-20">
+    <div className="-mx-4 bg-white border-t">
+      <div className="mx-auto max-w-[1440px] md:flex md:items-center md:justify-between p-4 sm:p-6 lg:px-8 xl:px-20">
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (
             <Link
@@ -77,7 +77,6 @@ const Footer = () => {
               href={item.href}
               className="text-gray-400 hover:text-gray-500"
             >
-              <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
             </Link>
           ))}
@@ -88,7 +87,7 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 
