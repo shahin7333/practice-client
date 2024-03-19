@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import SingleProduct from "./SingleProduct";
 import Link from "next/link";
 
 const ProductList = ({ data, title, des, total = false }) => {
+  console.log("data", data);
   return (
     <div className="mx-auto max-w-[1440px] overflow-hidden my-8  px-4 sm:px-6 lg:px-8 xl:px-20">
       <div className="mb-8">
@@ -17,7 +19,7 @@ const ProductList = ({ data, title, des, total = false }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data?.slice(0, 8).map((item) => (
+        {data?.map((item) => (
           <SingleProduct key={item.id} product={item} />
         ))}
       </div>
