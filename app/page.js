@@ -4,26 +4,33 @@ import Incentives from "../components/client/home/Incentives";
 import ProductList from "../components/client/common/ProductList";
 
 const Home = async () => {
-  const products = await axiosInstance.get("/products?page=1&limit=8");
-  const allProducts = products.data.payload.products;
+  const products = await axiosInstance.get("/categories");
+  const allCategory = products.data.payload.categories;
   return (
     <main className="">
       <Banner />
-      <ProductList
+      {allCategory?.slice(0.3).map((category) => (
+        <ProductList
+          id={category._id}
+          title={category?.category_name}
+          des="Highlighting its main purpose and key features"
+        />
+      ))}
+      {/* <ProductList
         data={allProducts}
-        title="Featured products"
+        title={allProducts?.category_name}
+        des="Highlighting its main purpose and key features"
+      /> */}
+      {/* <ProductList
+        data={allProducts}
+        title={allProducts?.category_name}
         des="Highlighting its main purpose and key features"
       />
       <ProductList
         data={allProducts}
-        title="Latest products"
+        title={allProducts?.category_name}
         des="Highlighting its main purpose and key features"
-      />
-      <ProductList
-        data={allProducts}
-        title="Hot deals"
-        des="Highlighting its main purpose and key features"
-      />
+      /> */}
       <Incentives />
     </main>
   );
