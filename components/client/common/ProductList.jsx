@@ -8,7 +8,6 @@ const ProductList = async ({ id, title, des }) => {
     `/products?page=1&limit=8&categoryId=${id}`
   );
   const allProducts = products.data.payload.products;
-  console.log(allProducts);
 
   return (
     <>
