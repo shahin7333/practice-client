@@ -4,8 +4,8 @@ import Incentives from "../components/client/home/Incentives";
 import ProductList from "../components/client/common/ProductList";
 
 const Home = async () => {
-  const products = await axiosInstance.get("/categories");
-  const allCategory = products.data.payload.categories;
+  const categories = await axiosInstance.get("/categories");
+  const allCategory = categories.data.payload.categories;
   return (
     <main className="">
       <Banner />
@@ -16,21 +16,6 @@ const Home = async () => {
           des="Highlighting its main purpose and key features"
         />
       ))}
-      {/* <ProductList
-        data={allProducts}
-        title={allProducts?.category_name}
-        des="Highlighting its main purpose and key features"
-      /> */}
-      {/* <ProductList
-        data={allProducts}
-        title={allProducts?.category_name}
-        des="Highlighting its main purpose and key features"
-      />
-      <ProductList
-        data={allProducts}
-        title={allProducts?.category_name}
-        des="Highlighting its main purpose and key features"
-      /> */}
       <Incentives />
     </main>
   );

@@ -1,7 +1,12 @@
 import React from "react";
+import Category from "../../../../components/admin/category/Category"
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <>
+      <Category />
+    </>
+  );
 };
 
 export default page;

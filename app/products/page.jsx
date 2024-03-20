@@ -3,8 +3,8 @@ import ProductList from "../../components/client/common/ProductList";
 import axiosInstance from "../../services/axiosInstance";
 
 const page = async () => {
-  const products = await axiosInstance.get("/categories");
-  const allCategory = products.data.payload.categories;
+  const categories = await axiosInstance.get("/categories");
+  const allCategory = categories.data.payload.categories;
   return (
     <>
       {allCategory?.map((category) => (
@@ -14,11 +14,6 @@ const page = async () => {
           des="Highlighting its main purpose and key features"
         />
       ))}
-      {/* <ProductList
-        data={allProducts}
-        title="Similar products"
-        des="Highlighting its main purpose and key features"
-      /> */}
     </>
   );
 };
