@@ -2,10 +2,10 @@ import ProductDetails from "../../../components/client/product-details/ProductDe
 import React from "react";
 import axiosInstance from "../../../services/axiosInstance";
 
-const page = async () => {
-  const details = await axiosInstance.get("/products/65f84e4d3d2f0976c075375c");
-  console.log("details,", details);
-  return <ProductDetails />;
+const page = async ({ params }) => {
+  const products = await axiosInstance.get(`/products/${params.id}`);
+  const allProducts = products.data.payload.product;
+  return <ProductDetails data={allProducts} />;
 };
 
 export default page;

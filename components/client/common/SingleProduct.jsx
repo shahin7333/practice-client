@@ -5,11 +5,11 @@ const SingleProduct = ({ product }) => {
     <Link
       href={`/products/${product?._id}`}
       key={product?._id}
-      className="border border-gray-200 hover:shadow-md"
+      className="border border-gray-200 hover:shadow-md hover:border-indigo-200"
     >
       <div className="overflow-hidden">
         <img
-          src={product?.image}
+          src={product?.image || "/assets/default-image.jpg"}
           alt={product?.product_name}
           className="h-full w-full object-cover object-center"
         />
@@ -18,8 +18,11 @@ const SingleProduct = ({ product }) => {
         <h3 className="text-sm font-medium text-gray-900">
           {product?.product_name}
         </h3>
-        <p className="mt-4 text-base font-medium text-gray-900">
-          ${product?.price}
+        <p className="mt-2 text-sm font-medium text-gray-900">
+          Price: ${product?.price}
+        </p>
+        <p className="mt-2 text-xs font-medium text-gray-900">
+          Brand Name: {product?.brand?.brand_name}
         </p>
       </div>
     </Link>
