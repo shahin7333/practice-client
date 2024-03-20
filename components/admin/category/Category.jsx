@@ -16,7 +16,7 @@ const Category = ({categories}) => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteCategoryId, setDeleteCategoryId] = useState(null);
   const [deleteCategoryName, setDeleteCategoryName] = useState("");
-  
+
   const handleEditCategory = (categoryId, categoryName) => {
     setEditCategoryId(categoryId);
     setEditCategoryName(categoryName);
@@ -179,7 +179,7 @@ const Category = ({categories}) => {
       />
       <CommonModal
         content={
-          <form onSubmit={handleEditSubmit}>
+          <form>
             <h1 className="text-lg font-semibold mb-6">Edit Category Name</h1>
             <div>
               <p className="text-xs mb-1">Category Name</p>
