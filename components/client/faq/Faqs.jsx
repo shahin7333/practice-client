@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { Disclosure } from "@headlessui/react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const Faqs = () => {
   const faqs = [
@@ -57,8 +55,8 @@ const Faqs = () => {
       </div>
       <div className="mt-8">
         <dl className="grid sm:grid-cols-2 gap-6">
-          {faqs.map((faq) => (
-            <div key={faq.id} className="border p-4 md:p-6">
+          {faqs.map((faq,index) => (
+            <div key={index} className="border p-4 md:p-6">
               <dt className="text-base font-semibold leading-7 text-gray-900">
                 {faq.question}
               </dt>
