@@ -1,10 +1,10 @@
 "use client";
+import toast from "react-hot-toast";
 import React, { useState } from "react";
 import CommonModal from "../common/CommonModal";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import axiosInstance from "../../../services/axiosInstance";
-import toast from "react-hot-toast";
+import { PencilSquareIcon } from "@heroicons/react/20/solid";
 
 const Category = ({categories}) => {
   const [open, setOpen] = useState(false);
@@ -22,6 +22,7 @@ const Category = ({categories}) => {
     setEditCategoryName(categoryName);
     setEditOpen(true);
   };
+
   const handleDeleteCategory = (categoryId, categoryName) => {
     setDeleteCategoryId(categoryId);
     setDeleteCategoryName(categoryName);
@@ -43,6 +44,7 @@ const Category = ({categories}) => {
       .post('/categories', {category_name: categoryName})
       .then(res => {
         toast.success(res.data.message)
+        setAllCategories(res.data.payload.categories)
       })
       .catch(err => {
         toast.error(err.response.data.message)
@@ -50,6 +52,23 @@ const Category = ({categories}) => {
       .finally(() => {
         setCategoryName('')
         setOpen(false)
+      })
+   };
+  
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    
+    axiosInstance
+      .patch(`/categories/${editCategoryId}`,{category_name: editCategoryName})
+      .then(res => {
+        toast.success(res.data.message)
+        setAllCategories(res.data.payload.categories)
+      })
+      .catch(err => {
+        toast.error(err.response.data.message)
+      })
+      .finally(() => {
+        setEditOpen(false)
       })
    };
   
@@ -118,7 +137,7 @@ const Category = ({categories}) => {
                         <div
                           className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                           onClick={() =>
-                            handleEditCategory(category._id, category.category)
+                            handleEditCategory(category._id, category.category_name)
                           }
                         >
                           <PencilSquareIcon className="h-4 w-4" />
@@ -127,7 +146,7 @@ const Category = ({categories}) => {
                           onClick={() =>
                             handleDeleteCategory(
                               category._id,
-                              category.category
+                              category.category_name
                             )
                           }
                           className="text-red-500 hover:text-red-600 cursor-pointer"
@@ -177,9 +196,10 @@ const Category = ({categories}) => {
         open={open}
         setOpen={setOpen}
       />
+
       <CommonModal
         content={
-          <form>
+          <form onSubmit={handleEditSubmit}>
             <h1 className="text-lg font-semibold mb-6">Edit Category Name</h1>
             <div>
               <p className="text-xs mb-1">Category Name</p>
@@ -194,7 +214,7 @@ const Category = ({categories}) => {
             </div>
             <div className="flex justify-center gap-2 mt-4">
               <button
-                type="submit"
+                type="button"
                 onClick={() => setEditOpen(false)}
                 className="flex justify-center border border-indigo-600 text-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 focus:outline-none"
               >
@@ -202,7 +222,6 @@ const Category = ({categories}) => {
               </button>
               <button
                 type="submit"
-                onClick={() => setEditOpen(false)}
                 className="flex justify-center bg-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Submit
@@ -213,6 +232,7 @@ const Category = ({categories}) => {
         open={editOpen}
         setOpen={setEditOpen}
       />
+
       <CommonModal
         content={
           <>

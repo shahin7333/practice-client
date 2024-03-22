@@ -17,7 +17,7 @@ const AdminSidebar = () => {
               className={`group flex gap-x-2 items-center px-4 py-1.5 text-[14px] font-semibold ${pathname === item.subPath[0].href ||
                   (item.subPath[0].href.length > 10 &&
                     pathname.startsWith(item.subPath[0].href))
-                  ? "text-[#11181C] bg-[#F4F4F5] rounded-tiny"
+                ? "text-[#11181C] rounded-tiny"
                   : "text-[#73737C]"
                 }`}
             >

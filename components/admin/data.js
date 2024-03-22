@@ -24,11 +24,7 @@ export const adminSidebarData = [
       {
         name: "Category List",
         href: "/admin/categories/category-list",
-      },
-      {
-        name: "Add Category",
-        href: "/admin/categories/add-category",
-      },
+      }
     ],
   },
   {
@@ -38,11 +34,7 @@ export const adminSidebarData = [
       {
         name: "Brand List",
         href: "/admin/brands/brand-list",
-      },
-      {
-        name: "Add Brand",
-        href: "/admin/brands/add-brand",
-      },
+      }
     ],
   },
   {
@@ -52,11 +44,7 @@ export const adminSidebarData = [
       {
         name: "Product List",
         href: "/admin/products/product-list",
-      },
-      {
-        name: "Add Product",
-        href: "/admin/products/add-product",
-      },
+      }
     ],
   },
   {
