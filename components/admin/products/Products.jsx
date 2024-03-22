@@ -17,21 +17,24 @@ const Products = () => {
       product_name: "Khadi panjabi",
       category_name: "Cloth",
       brand: "brand 1",
-      price: "12",
+      quantity: 76,
+      price: 12,
     },
     {
       _id: 2,
       product_name: "Khadi panjabi",
       category_name: "Cloth",
       brand: "brand 2",
-      price: "12",
+      quantity: 34,
+      price: 12,
     },
     {
       _id: 3,
       product_name: "Khadi panjabi",
       category_name: "Cloth",
       brand: "brand 2",
-      price: "12",
+      quantity: 34,
+      price: 12,
     },
   ]);
   const handleEdit = (categoryId, categoryName) => {
@@ -88,6 +91,18 @@ const Products = () => {
                     </th>
                     <th
                       scope="col"
+                      className="py-3 px-4 text-left text-sm font-medium text-gray-900"
+                    >
+                      Price
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3 px-4 text-left text-sm font-medium text-gray-900"
+                    >
+                      Quantity
+                    </th>
+                    <th
+                      scope="col"
                       className="font-medium text-gray-900 py-3.5 px-4"
                     >
                       Action
@@ -105,6 +120,12 @@ const Products = () => {
                       </td>
                       <td className="whitespace-nowrap py-2.5 px-4 text-sm font-medium text-gray-900">
                         {product.brand}
+                      </td>
+                      <td className="whitespace-nowrap py-2.5 px-4 text-sm font-medium text-gray-900">
+                        {product.price}
+                      </td>
+                      <td className="whitespace-nowrap py-2.5 px-4 text-sm font-medium text-gray-900">
+                        {product.quantity}
                       </td>
                       <td className="py-3 px-4 flex gap-2 justify-center">
                         <div
