@@ -2,25 +2,26 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 
 const Login = () => {
-  const session = useSession()
   const pathname = usePathname()
 
   const [formData, setFormData] = useState({
+    role: pathname.includes('/admin/login') ? 'superAdmin' : 'customer',
     email: '',
     password: ''
   })
 
   const handleSubmit = async e => {
     e.preventDefault()
-
-    const { email, password } = formData
+    
+    const { role, email, password } = formData
 
     await signIn('credentials', {
       redirect: false,
+      role: role,
       email: email,
       password: password
     })

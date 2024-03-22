@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 const page = () => {
    const session = useSession()
-  if (session?.status === 'unauthenticated') {
+  if (session?.status === 'unauthenticated' || session?.data?.user?.role === 'superAdmin') {
     redirect('/auth/login')
   }
 

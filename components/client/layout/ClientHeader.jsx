@@ -158,7 +158,7 @@ const ClientHeader = () => {
               <span> ({count})</span>
             </Link>
 
-            {session.status === 'authenticated' ? (
+            {(session.status === 'authenticated' && session?.data?.user?.role === 'customer') ? (
               <Menu as='div' className='relative inline-block text-left'>
                 <div>
                   <Menu.Button className='flex h-full items-center justify-center'>
@@ -202,7 +202,7 @@ const ClientHeader = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            type='submit'
+                            type='button'
                             className={classNames(
                               active
                                 ? 'bg-gray-100 text-gray-900'

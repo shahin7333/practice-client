@@ -6,7 +6,10 @@ import Login from '../../../components/client/auth/Login'
 
 const page = () => {
   const session = useSession()
-  if (session?.status === 'authenticated') {
+  if (
+    session?.status === 'authenticated' &&
+    session?.data?.user?.role === 'superAdmin'
+  ) {
     redirect('/admin')
   }
 
