@@ -25,12 +25,41 @@ const Products = ({ categories, brands, allProducts }) => {
     description: "",
     file: null,
   });
-  console.log("fh:", formData);
-  const handleEdit = (categoryId, categoryName) => {
-    setEditId(categoryId);
-    setEditName(categoryName);
+  const [editFormData, setEditFormData] = useState({
+    product_name: "",
+    category_name: "",
+    brand_name: "",
+    price: "",
+    quantity: "",
+    stock: "",
+    description: "",
+    file: null,
+  });
+  console.log("fh:", editFormData);
+  const handleEdit = (
+    productId,
+    productName,
+    categoryName,
+    brandName,
+    price,
+    quantity,
+    stock,
+    description
+  ) => {
+    setEditId(productId);
+    setEditFormData({
+      product_name: productName,
+      category_name: categoryName,
+      brand_name: brandName,
+      price: price,
+      quantity: quantity,
+      stock: stock,
+      description: description,
+      file: null,
+    });
     setEditOpen(true);
   };
+
   const handleDelete = (categoryId, categoryName) => {
     setDeleteId(categoryId);
     setDeletePrduct(categoryName);
@@ -44,10 +73,23 @@ const Products = ({ categories, brands, allProducts }) => {
       [name]: value,
     });
   };
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData({
+      ...editFormData,
+      [name]: value,
+    });
+  };
 
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
+      file: e.target.files[0],
+    });
+  };
+  const handleEditFileChange = (e) => {
+    setEditFormData({
+      ...editFormData,
       file: e.target.files[0],
     });
   };
@@ -83,6 +125,55 @@ const Products = ({ categories, brands, allProducts }) => {
     } finally {
       setOpen(false);
     }
+  };
+  const handleDeleteProduct = (id) => {
+    axiosInstance
+      .delete(`/products/${id}`)
+      .then((res) => {
+        setAllProducts(res.data.payload.products);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setDeleteOpen(false);
+      });
+  };
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+
+    axiosInstance
+      .patch(`/products/${editId}`, {
+        product_name: editFormData.product_name,
+        category: editFormData.category_name,
+        brand: editFormData.brand_name,
+        price: editFormData.price,
+        stock: editFormData.stock,
+        description: editFormData.description,
+        quantity: editFormData.quantity,
+        file: editFormData.file,
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        setAllProducts(res.data.payload.products);
+        setEditFormData({
+          product_name: "",
+          category_name: "",
+          brand_name: "",
+          price: "",
+          quantity: "",
+          stock: "",
+          description: "",
+          file: null,
+        });
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setEditOpen(false);
+      });
   };
 
   return (
@@ -169,7 +260,17 @@ const Products = ({ categories, brands, allProducts }) => {
                         <div
                           className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                           onClick={() =>
-                            handleEdit(product._id, product.product_name)
+                            handleEdit(
+                              product._id,
+                              product.product_name,
+                              product.category?.category_name,
+                              product.brand?.brand_name,
+                              product.price,
+                              product.quantity,
+                              product.stock,
+                              product.description,
+                              product.file
+                            )
                           }
                         >
                           <PencilSquareIcon className="h-4 w-4" />
@@ -313,7 +414,6 @@ const Products = ({ categories, brands, allProducts }) => {
               </button>
               <button
                 type="submit"
-                onClick={() => setOpen(false)}
                 className="flex justify-center bg-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Add New
@@ -326,20 +426,8 @@ const Products = ({ categories, brands, allProducts }) => {
       />
       <CommonModal
         content={
-          <div>
+          <form onSubmit={handleEditSubmit}>
             <h1 className="text-lg font-semibold mb-6">Edit Product</h1>
-            {/* <div>
-              <p className="text-xs mb-1">Brand Name</p>
-              <input
-                id="edit_brand_name"
-                name="edit_brand_name"
-                type="text"
-                required
-                value={editName}
-                onChange={(e) => setEditName(e.target.value)}
-                className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
-              />
-            </div> */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-xs mb-1">Product Name</p>
@@ -348,58 +436,71 @@ const Products = ({ categories, brands, allProducts }) => {
                   name="product_name"
                   type="text"
                   required
-                  //   value={formData.email}
-                  //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={editFormData.product_name}
+                  onChange={handleEditInputChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
               <div>
                 <p className="text-xs mb-1">Category Name</p>
                 <select
-                  id="location"
-                  name="location"
+                  id="category_name"
+                  name="category_name"
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
+                  value={editFormData.category_name}
+                  onChange={handleEditInputChange}
                 >
-                  {categories?.map((item, index) => (
-                    <option key={index}>{item.category_name}</option>
+                  {categories?.map((item) => (
+                    <option key={item._id} value={item._id}>
+                      {item.category_name}
+                    </option>
                   ))}
                 </select>
               </div>
               <div>
                 <p className="text-xs mb-1">Brand Name</p>
                 <select
-                  id="location"
-                  name="location"
+                  id="brand_name"
+                  name="brand_name"
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
+                  value={editFormData.brand_name}
+                  onChange={handleEditInputChange}
+                  defaultValue={editFormData.brand_name}
                 >
-                  {brands?.map((item, index) => (
-                    <option key={index}>{item.brand_name}</option>
+                  {brands?.map((item) => (
+                    <option
+                      key={item._id}
+                      value={item._id}
+                      selected={item._id === editFormData.brand_name}
+                    >
+                      {item.brand_name}
+                    </option>
                   ))}
                 </select>
               </div>
               <div>
-                <p className="text-xs mb-1">Price Name</p>
+                <p className="text-xs mb-1">Price</p>
                 <input
                   id="price"
                   name="price"
                   type="number"
                   min={0}
                   required
-                  //   value={formData.email}
-                  //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={editFormData.price}
+                  onChange={handleEditInputChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
               <div>
-                <p className="text-xs mb-1">Quality</p>
+                <p className="text-xs mb-1">Quantity</p>
                 <input
-                  id="quality"
-                  name="quality"
+                  id="quantity"
+                  name="quantity"
                   type="number"
                   min={0}
                   required
-                  //   value={formData.email}
-                  //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={editFormData.quantity}
+                  onChange={handleEditInputChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
@@ -411,8 +512,8 @@ const Products = ({ categories, brands, allProducts }) => {
                   type="number"
                   min={0}
                   required
-                  //   value={formData.email}
-                  //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={editFormData.stock}
+                  onChange={handleEditInputChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
@@ -423,8 +524,8 @@ const Products = ({ categories, brands, allProducts }) => {
                   name="description"
                   type="text"
                   required
-                  //   value={formData.email}
-                  //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={editFormData.description}
+                  onChange={handleEditInputChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
@@ -434,28 +535,28 @@ const Products = ({ categories, brands, allProducts }) => {
                   id="file"
                   name="file"
                   type="file"
-                  required
-                  //   value={formData.email}
-                  //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={editFormData.file}
+                  onChange={handleEditFileChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400 cursor-pointer"
                 />
               </div>
             </div>
             <div className="flex justify-center gap-2 mt-4">
               <button
+                type="button"
                 onClick={() => setEditOpen(false)}
                 className="flex justify-center border border-indigo-600 text-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 focus:outline-none"
               >
                 Cancel
               </button>
               <button
-                onClick={() => setEditOpen(false)}
+                type="submit"
                 className="flex justify-center bg-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Submit
               </button>
             </div>
-          </div>
+          </form>
         }
         open={editOpen}
         setOpen={setEditOpen}
@@ -478,7 +579,7 @@ const Products = ({ categories, brands, allProducts }) => {
                 Cancel
               </button>
               <button
-                onClick={() => setDeleteOpen(false)}
+                onClick={() => handleDeleteProduct(deleteId)}
                 className="flex justify-center bg-red-500 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Confirm
