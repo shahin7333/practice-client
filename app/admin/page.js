@@ -7,8 +7,8 @@ import AdminTable from "../../components/admin/AdminTable";
 
 const DashboardPage = () => {
   const session = useSession()
-  if (session?.status === 'unauthenticated') {
-    redirect('/auth/login')
+  if (session?.data?.user?.role !== 'superAdmin') {
+    redirect('/admin/login')
   }
 
   return (

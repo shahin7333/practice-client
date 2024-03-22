@@ -1,22 +1,24 @@
-"use client";
+'use client'
 
-import { Fragment } from "react";
-import { usePathname } from "next/navigation";
-import AdminHeader from "../client/layout/AdminHeader";
-import ClientHeader from "../client/layout/ClientHeader";
+import { Fragment } from 'react'
+import { usePathname } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import AdminHeader from '../client/layout/AdminHeader'
+import ClientHeader from '../client/layout/ClientHeader'
 
 function AppNavbar() {
-  const pathname = usePathname();
+  const session = useSession()
+  const pathname = usePathname()
 
-  return !pathname.includes("/admin") ? (
+  return !pathname.includes('/admin') ? (
     <Fragment>
       <ClientHeader />
     </Fragment>
   ) : (
     <Fragment>
-      <AdminHeader />
+        {session?.data?.user?.role === 'superAdmin' && <AdminHeader />}
     </Fragment>
-  );
+    )
 }
 
-export default AppNavbar;
+export default AppNavbar

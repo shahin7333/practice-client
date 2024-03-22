@@ -2,9 +2,13 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 const Login = () => {
+  const session = useSession()
+  const pathname = usePathname()
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -84,19 +88,20 @@ const Login = () => {
               </div>
             </div>
 
-            <div className='flex items-center justify-between'>
-              <p className='text-xs md:text-sm'>Don't have an account?</p>
+            {!pathname.includes('/admin/login') && (
+              <div className='flex items-center justify-between'>
+                <p className='text-xs md:text-sm'>Don't have an account?</p>
 
-              <div className='text-sm leading-6'>
-                <Link
-                  href='/auth/registration'
-                  className='text-xs md:text-sm font-medium text-indigo-600'
-                >
-                  Registration Now
-                </Link>
+                <div className='text-sm leading-6'>
+                  <Link
+                    href='/auth/registration'
+                    className='text-xs md:text-sm font-medium text-indigo-600'
+                  >
+                    Registration Now
+                  </Link>
+                </div>
               </div>
-            </div>
-
+            )}
             <div>
               <button
                 type='submit'

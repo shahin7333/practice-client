@@ -9,7 +9,7 @@ const SingleProduct = ({ product }) => {
     >
       <div className="overflow-hidden">
         <img
-          src={product?.image || "/assets/default-image.jpg"}
+          src={"/assets/default-image.jpg"}
           alt={product?.product_name}
           className="h-full w-full object-cover object-center"
         />
