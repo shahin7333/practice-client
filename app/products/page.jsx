@@ -1,10 +1,11 @@
 import React from "react";
-import ProductList from "../../components/client/common/ProductList";
 import axiosInstance from "../../services/axiosInstance";
+import ProductList from "../../components/client/common/ProductList";
 
 const page = async () => {
   const categories = await axiosInstance.get("/categories");
   const allCategory = categories.data.payload.categories;
+
   return (
     <>
       {allCategory?.map((category) => (

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
-import axiosInstance from '../../../services/axiosInstance'
+import { signIn } from 'next-auth/react'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,19 +10,18 @@ const Login = () => {
     password: ''
   })
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    axiosInstance
-      .post('/auth/login', formData)
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(err => {
-      })
-      .finally(() => {
-      })
+    const { email, password } = formData
+
+    await signIn('credentials', {
+      redirect: false,
+      email: email,
+      password: password
+    })
   }
+
   return (
     <div className='flex min-h-full flex-1 flex-col justify-center items-center py-12 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>

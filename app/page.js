@@ -6,8 +6,9 @@ import ProductList from "../components/client/common/ProductList";
 const Home = async () => {
   const categories = await axiosInstance.get("/categories");
   const allCategory = categories.data.payload.categories;
+
   return (
-    <main className="">
+    <main>
       <Banner />
       {allCategory?.slice(0.3).map((category) => (
         <ProductList
