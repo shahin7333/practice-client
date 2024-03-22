@@ -20,6 +20,9 @@ const Brand = ({ brands }) => {
     setEditName(categoryName);
     setEditOpen(true);
   };
+  const handleEditChange = (e) => {
+    setEditName(e.target.value);
+  };
   const handleDelete = (categoryId, categoryName) => {
     setDeleteId(categoryId);
     setDeleteCategoryName(categoryName);
@@ -45,6 +48,23 @@ const Brand = ({ brands }) => {
       .finally(() => {
         setBrandName("");
         setOpen(false);
+      });
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+
+    axiosInstance
+      .patch(`/brands/${editId}`, { brand_name: editName })
+      .then((res) => {
+        toast.success(res.data.message);
+        setAllBrands(res.data.payload.brands);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setEditOpen(false);
       });
   };
 
@@ -170,7 +190,7 @@ const Brand = ({ brands }) => {
       />
       <CommonModal
         content={
-          <div>
+          <form onSubmit={handleEditSubmit}>
             <h1 className="text-lg font-semibold mb-6">Edit Brand Name</h1>
             <div>
               <p className="text-xs mb-1">Brand Name</p>
@@ -180,7 +200,7 @@ const Brand = ({ brands }) => {
                 type="text"
                 required
                 value={editName}
-                onChange={(e) => setEditName(e.target.value)}
+                onChange={handleEditChange}
                 className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
               />
             </div>
@@ -198,7 +218,7 @@ const Brand = ({ brands }) => {
                 Submit
               </button>
             </div>
-          </div>
+          </form>
         }
         open={editOpen}
         setOpen={setEditOpen}
