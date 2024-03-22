@@ -3,28 +3,18 @@ import React, { useState } from "react";
 import CommonModal from "../common/CommonModal";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
-const Brand = () => {
+import axiosInstance from "../../../services/axiosInstance";
+import toast from "react-hot-toast";
+const Brand = ({ brands }) => {
   const [open, setOpen] = useState(false);
+  const [brandName, setBrandName] = useState("");
+  const [allBrands, setAllBrands] = useState(brands);
   const [editOpen, setEditOpen] = useState(false);
   const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState("");
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteCategoryName, setDeleteCategoryName] = useState("");
-  const [brands, setBrands] = useState([
-    {
-      _id: 1,
-      brand: "brand 1",
-    },
-    {
-      _id: 2,
-      brand: "brand 2",
-    },
-    {
-      _id: 3,
-      brand: "brand 3",
-    },
-  ]);
   const handleEdit = (categoryId, categoryName) => {
     setEditId(categoryId);
     setEditName(categoryName);
@@ -35,6 +25,44 @@ const Brand = () => {
     setDeleteCategoryName(categoryName);
     setDeleteOpen(true);
   };
+
+  const handleChange = (e) => {
+    setBrandName(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axiosInstance
+      .post("/brands", { brand_name: brandName })
+      .then((res) => {
+        setAllBrands(res.data.payload.brands);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setBrandName("");
+        setOpen(false);
+      });
+  };
+
+  const handleDeleteBrand = (id) => {
+    axiosInstance
+      .delete(`/brands/${id}`)
+      .then((res) => {
+        setAllBrands(res.data.payload.brands);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setDeleteOpen(false);
+      });
+  };
+
   return (
     <div className="p-4 md:p-6">
       <div>
@@ -74,15 +102,17 @@ const Brand = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {brands.map((brand, index) => (
+                  {allBrands.map((brand, index) => (
                     <tr key={index} className="even:bg-gray-50">
                       <td className="whitespace-nowrap py-2.5 px-4 text-sm font-medium text-gray-900">
-                        {brand.brand}
+                        {brand.brand_name}
                       </td>
                       <td className="py-3 px-4 flex gap-2 justify-center">
                         <div
                           className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
-                          onClick={() => handleEdit(brand._id, brand.brand)}
+                          onClick={() =>
+                            handleEdit(brand._id, brand.brand_name)
+                          }
                         >
                           <PencilSquareIcon className="h-4 w-4" />
                         </div>
@@ -103,7 +133,7 @@ const Brand = () => {
       </div>
       <CommonModal
         content={
-          <div>
+          <form onSubmit={handleSubmit}>
             <h1 className="text-lg font-semibold mb-6">Add Brand Name</h1>
             <div>
               <p className="text-xs mb-1">Brand Name</p>
@@ -112,26 +142,28 @@ const Brand = () => {
                 name="brand_name"
                 type="text"
                 required
-                //   value={formData.email}
-                //   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                value={brandName}
+                onChange={handleChange}
                 className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
               />
             </div>
             <div className="flex justify-center gap-2 mt-4">
               <button
+                type="button"
                 onClick={() => setOpen(false)}
                 className="flex justify-center border border-indigo-600 text-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 focus:outline-none"
               >
                 Cancel
               </button>
               <button
+                type="submit"
                 onClick={() => setOpen(false)}
                 className="flex justify-center bg-indigo-600 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Add New
               </button>
             </div>
-          </div>
+          </form>
         }
         open={open}
         setOpen={setOpen}
@@ -189,7 +221,7 @@ const Brand = () => {
                 Cancel
               </button>
               <button
-                onClick={() => setDeleteOpen(false)}
+                onClick={() => handleDeleteBrand(deleteId)}
                 className="flex justify-center bg-red-500 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Confirm
