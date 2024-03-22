@@ -1,3 +1,4 @@
+"use client";
 import {
   CheckIcon,
   ClockIcon,
@@ -5,6 +6,7 @@ import {
   XMarkIcon as XMarkIconMini,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const products = [
   {
@@ -44,21 +46,9 @@ const products = [
     imageAlt: "Insulated bottle with white base and black snap lid.",
   },
 ];
-const relatedProducts = [
-  {
-    id: 1,
-    name: "Billfold Wallet",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-related-product-01.jpg",
-    imageAlt: "Front of Billfold Wallet in natural leather.",
-    price: "$118",
-    color: "Natural",
-  },
-  // More products...
-];
 
 const SCart = () => {
+  const router = useRouter();
   return (
     <div className="mx-auto px-4 pb-24 pt-16 sm:px-6 max-w-[1440px] lg:px-20">
       <h1 className="text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">
