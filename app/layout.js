@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 import { Poppins } from "next/font/google";
 import AppNavbar from "../components/common/Navbar";
 import AppFooter from "../components/common/Footer";
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <AppNavbar />
         {children}
         <AppFooter />
+        <Toaster position='top-right' reverseOrder={false} />
       </body>
     </html>
   );
