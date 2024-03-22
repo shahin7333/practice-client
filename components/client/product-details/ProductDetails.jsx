@@ -1,8 +1,10 @@
 "use client";
 import { Disclosure, Tab } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import ProductList from "../common/ProductList";
 import Image from "next/image";
+import { useAtom } from "jotai";
+import { countAtom } from "../../../atom";
+import Link from "next/link";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,6 +12,10 @@ function classNames(...classes) {
 
 const ProductDetails = ({ data }) => {
   console.log("details", data);
+  const [count, setCount] = useAtom(countAtom);
+  const addtoCart = () => {
+    setCount(count + 1);
+  };
   return (
     <>
       <div className="mx-auto p-4 sm:p-6 lg:p-8 xl:p-20 lg:max-w-[1440px]">
@@ -80,12 +86,13 @@ const ProductDetails = ({ data }) => {
               <p className="text-xs text-gray-700">{data.description}</p>
             </div>
             <div className="mt-10">
-              <button
-                type="submit"
+              <Link
+                href="/cart"
+                onClick={addtoCart}
                 className=" bg-indigo-600 px-8 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
               >
                 Add to cart
-              </button>
+              </Link>
             </div>
 
             <section aria-labelledby="details-heading" className="mt-12">
