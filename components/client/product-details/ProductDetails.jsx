@@ -19,8 +19,6 @@ const ProductDetails = ({ data }) => {
   const session = useSession()
   // const [count, setCount] = useAtom(countAtom)
 
-  console.log(session?.data?.user)
-
   const addtoCart = () => {
     session.status === 'authenticated' &&
     session?.data?.user?.role === 'customer'

@@ -3,10 +3,12 @@
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
 import axiosInstance from '../../../services/axiosInstance'
 import { XMarkIcon as XMarkIconMini } from '@heroicons/react/20/solid'
 
 const SCart = ({ cartData }) => {
+    const session = useSession()
   const [carts, setCarts] = useState(cartData)
   let subtotalPrice = 0
 
@@ -22,10 +24,12 @@ const SCart = ({ cartData }) => {
   }
 
   const handleUpdateQty = (value, id) => {
-    axiosInstance.patch(`/cart/${id}`, { quantity: value,customerId: }).then(res => {
-      toast.success(res.data.message)
-      setCarts(res.data.payload.carts)
-    })
+    axiosInstance
+      .patch(`/cart/${id}`, { quantity: value, customerId: session?.data?.user?._id })
+      .then(res => {
+        toast.success(res.data.message)
+        setCarts(res.data.payload.carts)
+      })
   }
 
   carts.forEach(cart => {
@@ -133,13 +137,17 @@ const SCart = ({ cartData }) => {
                   <span className='text-xs'>20%</span>
                 </p>
               </dt>
-              <dd className='text-sm font-medium text-gray-900'>{subtotalPrice * 0.2}</dd>
+              <dd className='text-sm font-medium text-gray-900'>
+                {subtotalPrice * 0.2}
+              </dd>
             </div>
             <div className='flex items-center justify-between border-t border-gray-200 pt-4'>
               <dt className='text-base font-medium text-gray-900'>
                 Order total
               </dt>
-              <dd className='text-base font-medium text-gray-900'>{subtotalPrice * 1.2}</dd>
+              <dd className='text-base font-medium text-gray-900'>
+                {subtotalPrice * 1.2}
+              </dd>
             </div>
           </dl>
 
