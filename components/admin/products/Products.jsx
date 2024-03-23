@@ -465,7 +465,6 @@ const Products = ({ categories, brands, allProducts }) => {
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                   value={editFormData.brand_name}
                   onChange={handleEditInputChange}
-                  defaultValue={editFormData.brand_name}
                 >
                   {brands?.map((item) => (
                     <option
