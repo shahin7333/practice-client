@@ -77,7 +77,7 @@ const AdminHeader = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        type='submit'
+                        type='button'
                         className={classNames(
                           active
                             ? 'bg-gray-100 text-gray-900'

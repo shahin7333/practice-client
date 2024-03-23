@@ -1,16 +1,30 @@
-"use client";
-import React from "react";
-import SCart from "../../components/client/cart/SCart";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+'use client'
+
+import { redirect } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import SCart from '../../components/client/cart/SCart'
+import axiosInstance from '../../services/axiosInstance'
 
 const page = () => {
-   const session = useSession()
-  if (session?.status === 'unauthenticated') {
+  const session = useSession()
+  const [cartData, setCartsData] = useState([])
+
+  if (
+    session?.status === 'unauthenticated' ||
+    session?.data?.user?.role === 'superAdmin'
+  ) {
     redirect('/auth/login')
   }
 
-  return <SCart />;
-};
+  useEffect(() => {
+    session?.data?.user?._id &&
+      axiosInstance.get(`/cart/${session?.data?.user?._id}`).then(res => {
+        setCartsData(res.data.payload.carts)
+      })
+  }, [session?.data?.user?._id])
 
-export default page;
+  return <SCart cartData={cartData} />
+}
+
+export default page
