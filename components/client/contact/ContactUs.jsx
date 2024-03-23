@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import {
   BuildingOffice2Icon,
@@ -5,8 +7,12 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const ContactUs = () => {
+  const session = useSession()
+  console.log(session?.data?.user)
+
   return (
     <div className="mx-auto grid max-w-[1440px] px-4 py-8 sm:py-12 sm:px-6 lg:px-8 xl:px-20 grid-cols-1 lg:grid-cols-2 items-center gap-6">
       <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
