@@ -49,12 +49,12 @@ export const adminSidebarData = [
     ],
   },
   {
-    name: "Order List",
-    icon: DocumentArrowUpIcon,
+    name: "Orders",
+    icon: CircleStackIcon,
     subPath: [
       {
         name: "Order List",
-        href: "/admin/order-list",
+        href: "/admin/orders",
       },
     ],
   },

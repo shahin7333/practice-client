@@ -3,13 +3,12 @@
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import axiosInstance from '../../../services/axiosInstance'
 import { XMarkIcon as XMarkIconMini } from '@heroicons/react/20/solid'
-import { useRouter } from 'next/navigation'
 
 const SCart = ({ cartData }) => {
-  console.log(cartData)
   const router = useRouter()
   const session = useSession()
   const [carts, setCarts] = useState(cartData || {})
@@ -46,7 +45,7 @@ const SCart = ({ cartData }) => {
   const handleOrder = () => {
     axiosInstance
       .post('/order', {
-        customerId: session?.data?.user?._id,
+        customer: session?.data?.user?._id,
         totalPrice: subtotalPrice * 1.2,
         status: 'pending'
       })
