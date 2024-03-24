@@ -13,13 +13,12 @@ import toast from "react-hot-toast";
 
 const ContactUs = () => {
   const session = useSession();
-  console.log(session?.data?.user);
   const sessionData = session?.data?.user;
   const [formData, setFormData] = useState({
-    full_name: sessionData?.name || "",
-    email: sessionData?.email || "",
-    phone: sessionData?.phone || "",
-    description: "",
+    full_name: sessionData?.name,
+    email: sessionData?.email,
+    phone: sessionData?.phone,
+    msg: "",
   });
 
   const handleChange = (e) => {
@@ -37,10 +36,7 @@ const ContactUs = () => {
       .then((res) => {
         toast.success(res.data.message);
         setFormData({
-          full_name: "",
-          email: "",
-          number: "",
-          description: "",
+          msg: "",
         });
       })
       .catch((err) => {
@@ -121,6 +117,7 @@ const ContactUs = () => {
                     type="text"
                     name="full_name"
                     id="full_name"
+                    disabled
                     className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
                     value={formData.full_name}
                     onChange={handleChange}
@@ -136,6 +133,7 @@ const ContactUs = () => {
                     type="email"
                     name="email"
                     id="email"
+                    disabled
                     className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
                     value={formData.email}
                     onChange={handleChange}
@@ -152,6 +150,7 @@ const ContactUs = () => {
                   type="tel"
                   name="phone"
                   id="phone"
+                  disabled
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
                   value={formData.phone}
                   onChange={handleChange}
@@ -160,18 +159,18 @@ const ContactUs = () => {
             </div>
             <div>
               <label
-                htmlFor="description"
+                htmlFor="msg"
                 className="block text-xs text-gray-900"
               >
                 Message
               </label>
               <div className="mt-0.5">
                 <textarea
-                  name="description"
-                  id="description"
+                  name="msg"
+                  id="msg"
                   rows={4}
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
-                  value={formData.description}
+                  value={formData.msg}
                   onChange={handleChange}
                 />
               </div>
