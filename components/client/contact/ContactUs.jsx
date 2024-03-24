@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   BuildingOffice2Icon,
   EnvelopeIcon,
@@ -8,10 +8,48 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import axiosInstance from "../../../services/axiosInstance";
+import toast from "react-hot-toast";
 
 const ContactUs = () => {
-  const session = useSession()
-  console.log(session?.data?.user)
+  const session = useSession();
+  console.log(session?.data?.user);
+  const sessionData = session?.data?.user;
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    number: "",
+    description: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axiosInstance
+      .post("/contacts", formData)
+      .then((res) => {
+        toast.success(res.data.message);
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          number: "",
+          description: "",
+        });
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {});
+  };
 
   return (
     <div className="mx-auto grid max-w-[1440px] px-4 py-8 sm:py-12 sm:px-6 lg:px-8 xl:px-20 grid-cols-1 lg:grid-cols-2 items-center gap-6">
@@ -69,12 +107,12 @@ const ContactUs = () => {
           </div>
         </dl>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
           <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <div>
               <label
-                htmlFor="first-name"
+                htmlFor="first_name"
                 className="block text-xs text-gray-900"
               >
                 First name
@@ -82,16 +120,17 @@ const ContactUs = () => {
               <div className="mt-0.5">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
+                  name="first_name"
+                  id="first_name"
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
+                  value={formData.first_name}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div>
               <label
-                htmlFor="last-name"
+                htmlFor="last_name"
                 className="block text-xs text-gray-900"
               >
                 Last name
@@ -99,10 +138,11 @@ const ContactUs = () => {
               <div className="mt-0.5">
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
+                  name="last_name"
+                  id="last_name"
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
+                  value={formData.last_name}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -115,39 +155,42 @@ const ContactUs = () => {
                   type="email"
                   name="email"
                   id="email"
-                  autoComplete="email"
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="sm:col-span-2">
-              <label
-                htmlFor="phone-number"
-                className="block text-xs text-gray-900"
-              >
+              <label htmlFor="number" className="block text-xs text-gray-900">
                 Phone number
               </label>
               <div className="mt-0.5">
                 <input
                   type="tel"
-                  name="phone-number"
-                  id="phone-number"
-                  autoComplete="tel"
+                  name="number"
+                  id="number"
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="message" className="block text-xs text-gray-900">
+              <label
+                htmlFor="description"
+                className="block text-xs text-gray-900"
+              >
                 Message
               </label>
               <div className="mt-0.5">
                 <textarea
-                  name="message"
-                  id="message"
+                  name="description"
+                  id="description"
                   rows={4}
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
-                  defaultValue={""}
+                  value={formData.description}
+                  onChange={handleChange}
                 />
               </div>
             </div>
