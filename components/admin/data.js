@@ -1,6 +1,7 @@
 import {
   Bars3BottomLeftIcon,
   CircleStackIcon,
+  ClipboardDocumentListIcon,
   DocumentArrowUpIcon,
   HomeIcon,
   ListBulletIcon,
@@ -24,7 +25,7 @@ export const adminSidebarData = [
       {
         name: "Category List",
         href: "/admin/categories/category-list",
-      }
+      },
     ],
   },
   {
@@ -34,7 +35,7 @@ export const adminSidebarData = [
       {
         name: "Brand List",
         href: "/admin/brands/brand-list",
-      }
+      },
     ],
   },
   {
@@ -44,7 +45,7 @@ export const adminSidebarData = [
       {
         name: "Product List",
         href: "/admin/products/product-list",
-      }
+      },
     ],
   },
   {
@@ -54,6 +55,16 @@ export const adminSidebarData = [
       {
         name: "Order List",
         href: "/admin/order-list",
+      },
+    ],
+  },
+  {
+    name: "Contacts",
+    icon: ClipboardDocumentListIcon,
+    subPath: [
+      {
+        name: "Contact List",
+        href: "/admin/contact-list",
       },
     ],
   },
