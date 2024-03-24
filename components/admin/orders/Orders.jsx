@@ -1,15 +1,25 @@
 'use client'
 
+import toast from 'react-hot-toast'
 import { useState, Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
+import axiosInstance from '../../../services/axiosInstance'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-
-function classNames (...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 const Orders = ({ orders }) => {
   const [allOrders, setAllOrders] = useState(orders)
+
+  const handleUpdate = (type, id) => {
+    axiosInstance
+      .patch(`/order/${id}`, { status: type })
+      .then(res => {
+        toast.success(res.data.message)
+        setAllOrders(res.data.payload.orders)
+      })
+      .catch(err => {
+        toast.error(err.response.data.message)
+      })
+  }
 
   return (
     <div className='p-4 md:p-6'>
@@ -76,10 +86,18 @@ const Orders = ({ orders }) => {
                         {order.customer.email}
                       </td>
                       <td className='whitespace-nowrap py-2.5 px-4 text-sm font-medium text-gray-900'>
-                        {order.totalPrice}
+                        {order.totalPrice.toFixed(2)}
                       </td>
                       <td className='whitespace-nowrap py-2.5 px-4 text-sm font-medium text-gray-900 capitalize '>
-                        <span className='bg-orange-100 px-3 py-1 rounded-full text-xs'>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs ${
+                            order.status === 'pending'
+                              ? 'bg-orange-100'
+                              : order.status === 'delivered'
+                              ? 'bg-green-400 text-white'
+                              : 'bg-red-500 text-white'
+                          }`}
+                        >
                           {order.status}
                         </span>
                       </td>
@@ -87,12 +105,9 @@ const Orders = ({ orders }) => {
                         {new Date(order.createdAt).toISOString().split('T')[0]}
                       </td>
                       <td>
-                        <Menu
-                          as='div'
-                          className='relative inline-block text-left'
-                        >
+                        <Menu as='div' className='inline-block text-left'>
                           <div>
-                            <Menu.Button className='flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100'>
+                            <Menu.Button className='flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none p-1'>
                               <span className='sr-only'>Open options</span>
                               <EllipsisVerticalIcon
                                 className='h-5 w-5'
@@ -110,22 +125,29 @@ const Orders = ({ orders }) => {
                             leaveFrom='transform opacity-100 scale-100'
                             leaveTo='transform opacity-0 scale-95'
                           >
-                            <Menu.Items className='absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                            <Menu.Items className='absolute right-0 z-50 mt-2 w-56 origin-bottom-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                               <div className='py-1'>
                                 <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href='#'
-                                      className={classNames(
-                                        active
-                                          ? 'bg-gray-100 text-gray-900'
-                                          : 'text-gray-700',
-                                        'block px-4 py-2 text-sm'
-                                      )}
-                                    >
-                                      Account settings
-                                    </a>
-                                  )}
+                                  <span
+                                    className='block px-4 py-2 text-sm cursor-pointer'
+                                    role='button'
+                                    onClick={() =>
+                                      handleUpdate('delivered', order._id)
+                                    }
+                                  >
+                                    Accept
+                                  </span>
+                                </Menu.Item>
+                                <Menu.Item>
+                                  <span
+                                    className='block px-4 py-2 text-sm cursor-pointer'
+                                    role='button'
+                                    onClick={() =>
+                                      handleUpdate('cancelled', order._id)
+                                    }
+                                  >
+                                    Cancelled
+                                  </span>
                                 </Menu.Item>
                               </div>
                             </Menu.Items>
