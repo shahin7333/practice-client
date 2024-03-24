@@ -7,7 +7,7 @@ const Registration = () => {
     name: "",
     email: "",
     password: "",
-    number: "",
+    phone: "",
     role: "customer",
   });
 
