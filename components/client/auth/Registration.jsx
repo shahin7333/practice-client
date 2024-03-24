@@ -4,10 +4,20 @@ import React, { useState } from "react";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
-    confirm_password: "",
+    phone: "",
+    role: "customer",
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,12 +25,8 @@ const Registration = () => {
   };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center items-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+      <div className="sm:mx-auto sm:w-full sm:max-w-md flex flex-col items-center">
+        <h1 className="text-2xl font-bold text-indigo-600">Your Logo</h1>
         <h2 className="mt-4 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">
           Registration a account
         </h2>
@@ -31,10 +37,29 @@ const Registration = () => {
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label
+                htmlFor="name"
+                className="block text-xs leading-6 text-gray-900"
+              >
+                Full Name
+              </label>
+              <div className="mt-0.5">
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div>
+              <label
                 htmlFor="email"
                 className="block text-xs leading-6 text-gray-900"
               >
-                Email address
+                Email
               </label>
               <div className="mt-0.5">
                 <input
@@ -43,11 +68,9 @@ const Registration = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -64,40 +87,47 @@ const Registration = () => {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
                   required
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div>
               <label
-                htmlFor="confirm_password"
+                htmlFor="phone"
                 className="block text-xs leading-6 text-gray-900"
               >
-                Confirm password
+                Phone Number
               </label>
               <div className="mt-0.5">
                 <input
-                  id="confirm_password"
-                  name="confirm_password"
-                  type="password"
-                  autoComplete="confirm_password"
-                  required
-                  value={formData.confirm_password}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      confirm_password: e.target.value,
-                    })
-                  }
+                  id="phone"
+                  name="phone"
+                  type="text"
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
+                  value={formData.phone}
+                  onChange={handleChange}
                 />
               </div>
+            </div>
+            <div className="flex items-center mt-4">
+              <input
+                id="role"
+                name="role"
+                type="radio"
+                className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                value="customer"
+                checked
+                readOnly
+              />
+              <label
+                htmlFor="role"
+                className="ml-3 block text-sm font-medium leading-6 text-gray-900"
+              >
+                Customer
+              </label>
             </div>
 
             <div>
