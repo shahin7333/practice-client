@@ -16,10 +16,9 @@ const ContactUs = () => {
   console.log(session?.data?.user);
   const sessionData = session?.data?.user;
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    number: "",
+    full_name: sessionData?.name || "",
+    email: sessionData?.email || "",
+    phone: sessionData?.phone || "",
     description: "",
   });
 
@@ -38,8 +37,7 @@ const ContactUs = () => {
       .then((res) => {
         toast.success(res.data.message);
         setFormData({
-          first_name: "",
-          last_name: "",
+          full_name: "",
           email: "",
           number: "",
           description: "",
@@ -109,74 +107,58 @@ const ContactUs = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-          <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-            <div>
-              <label
-                htmlFor="first_name"
-                className="block text-xs text-gray-900"
-              >
-                First name
-              </label>
-              <div className="mt-0.5">
-                <input
-                  type="text"
-                  name="first_name"
-                  id="first_name"
-                  className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                />
+          <div className="grid grid-cols-1 gap-x-4 gap-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="full_name"
+                  className="block text-xs text-gray-900"
+                >
+                  Full Name
+                </label>
+                <div className="mt-0.5">
+                  <input
+                    type="text"
+                    name="full_name"
+                    id="full_name"
+                    className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
+                    value={formData.full_name}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-xs text-gray-900">
+                  Email
+                </label>
+                <div className="mt-0.5">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
             <div>
-              <label
-                htmlFor="last_name"
-                className="block text-xs text-gray-900"
-              >
-                Last name
-              </label>
-              <div className="mt-0.5">
-                <input
-                  type="text"
-                  name="last_name"
-                  id="last_name"
-                  className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="email" className="block text-xs text-gray-900">
-                Email
-              </label>
-              <div className="mt-0.5">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="number" className="block text-xs text-gray-900">
+              <label htmlFor="phone" className="block text-xs text-gray-900">
                 Phone number
               </label>
               <div className="mt-0.5">
                 <input
                   type="tel"
-                  name="number"
-                  id="number"
+                  name="phone"
+                  id="phone"
                   className="block w-full px-4 py-1.5 text-gray-900 outline-none border text-sm"
-                  value={formData.phoneNumber}
+                  value={formData.phone}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="sm:col-span-2">
+            <div>
               <label
                 htmlFor="description"
                 className="block text-xs text-gray-900"
