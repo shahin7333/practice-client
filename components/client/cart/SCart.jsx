@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import axiosInstance from '../../../services/axiosInstance'
 import { XMarkIcon as XMarkIconMini } from '@heroicons/react/20/solid'
+import { useRouter } from 'next/navigation'
 
 const SCart = ({ cartData }) => {
-    const session = useSession()
-  const [carts, setCarts] = useState(cartData)
+  console.log(cartData)
+  const router = useRouter()
+  const session = useSession()
+  const [carts, setCarts] = useState(cartData || {})
   let subtotalPrice = 0
 
   useEffect(() => {
@@ -25,16 +28,34 @@ const SCart = ({ cartData }) => {
 
   const handleUpdateQty = (value, id) => {
     axiosInstance
-      .patch(`/cart/${id}`, { quantity: value, customerId: session?.data?.user?._id })
+      .patch(`/cart/${id}`, {
+        quantity: value,
+        customerId: session?.data?.user?._id
+      })
       .then(res => {
         toast.success(res.data.message)
         setCarts(res.data.payload.carts)
       })
   }
 
-  carts.forEach(cart => {
-    subtotalPrice += cart.totalPrice
-  })
+  carts.length > 0 &&
+    carts?.forEach(cart => {
+      subtotalPrice += cart.totalPrice
+    })
+
+  const handleOrder = () => {
+    axiosInstance
+      .post('/order', {
+        customerId: session?.data?.user?._id,
+        totalPrice: subtotalPrice * 1.2,
+        status: 'pending'
+      })
+      .then(res => {
+        toast.success(res.data.message)
+        router.push('/cart/success')
+        setCarts({})
+      })
+  }
 
   return (
     <div className='mx-auto px-4 pb-24 pt-16 sm:px-6 max-w-[1440px] lg:px-20'>
@@ -42,7 +63,7 @@ const SCart = ({ cartData }) => {
         Shopping Cart
       </h1>
       <p className='text-sm mt-2'>Items in your shopping cart</p>
-      <form className='mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16'>
+      <div className='mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16'>
         <section aria-labelledby='cart-heading' className='lg:col-span-7'>
           <ul
             role='list'
@@ -138,7 +159,7 @@ const SCart = ({ cartData }) => {
                 </p>
               </dt>
               <dd className='text-sm font-medium text-gray-900'>
-                {subtotalPrice * 0.2}
+                {(subtotalPrice * 0.2).toFixed(2)}
               </dd>
             </div>
             <div className='flex items-center justify-between border-t border-gray-200 pt-4'>
@@ -146,21 +167,22 @@ const SCart = ({ cartData }) => {
                 Order total
               </dt>
               <dd className='text-base font-medium text-gray-900'>
-                {subtotalPrice * 1.2}
+                {(subtotalPrice * 1.2).toFixed(2)}
               </dd>
             </div>
           </dl>
 
           <div className='mt-6'>
             <button
-              type='submit'
+              type='button'
+              onClick={handleOrder}
               className='w-full border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50'
             >
               Checkout
             </button>
           </div>
         </section>
-      </form>
+      </div>
     </div>
   )
 }
