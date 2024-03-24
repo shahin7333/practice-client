@@ -57,7 +57,7 @@ const SCart = ({ cartData }) => {
                   <div className='col-span-6 flex items-start gap-4'>
                     <img
                       src={'/assets/default-image.jpg'}
-                      alt={item.product.product_name}
+                      alt={item?.product?.product_name}
                       className='h-24 w-24 object-cover object-center'
                     />
                     <div>
@@ -67,12 +67,12 @@ const SCart = ({ cartData }) => {
                             href=''
                             className='font-medium text-gray-700 hover:text-gray-800'
                           >
-                            {item.product.product_name}
+                            {item?.product?.product_name}
                           </Link>
                         </h3>
                       </div>
                       <p className='mt-1 text-sm font-medium text-indigo-600'>
-                        {item.product.price}
+                        {item?.product?.price}
                       </p>
                     </div>
                   </div>
