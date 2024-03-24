@@ -1,53 +1,79 @@
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../services/axiosInstance";
 import {
-  CheckCircleIcon,
-  CloudIcon,
-  ShoppingCartIcon,
-  XCircleIcon,
-} from "@heroicons/react/20/solid";
-import React, { useState } from "react";
+  ChartBarIcon,
+  CheckBadgeIcon,
+  TruckIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
 
 const Card = () => {
-  const [cards, setCards] = useState([
-    {
-      name: "Products",
-      total: "23",
-      color: "bg-indigo-500",
-      icon: <ShoppingCartIcon className="h-8 w-8 text-white" />,
-    },
-    {
-      name: "Orders",
-      total: "10",
-      color: "bg-green-500",
-      icon: <CheckCircleIcon className="h-8 w-8 text-white" />,
-    },
-    {
-      name: "Errors",
-      total: "5",
-      color: "bg-red-500",
-      icon: <XCircleIcon className="h-8 w-8 text-white" />,
-    },
-    {
-      name: "Cloud Storage",
-      total: "100GB",
-      color: "bg-sky-500",
-      icon: <CloudIcon className="h-8 w-8 text-white" />,
-    },
-  ]);
+  const [totalCustomers, setTotalCustomers] = useState(0);
+  const [totalBrands, setTotalBrands] = useState(0);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersResponse = await axiosInstance.get("/users");
+        const brandsResponse = await axiosInstance.get("/brands");
+        const productsResponse = await axiosInstance.get("/products");
+        const ordersResponse = await axiosInstance.get("/order");
+        const userData = usersResponse.data.payload.users;
+        const brandData = brandsResponse.data.payload.brands;
+        const productData = productsResponse.data.payload.products;
+        const orderData = ordersResponse.data.payload.orders;
+        setTotalCustomers(userData.length);
+        setTotalBrands(brandData.length);
+        setTotalProducts(productData.length);
+        setTotalOrders(orderData.length);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {cards.map((card, index) => (
-        <div
-          key={index}
-          className={`${card.color} p-4 md:p-6 shadow flex justify-between items-center`}
-        >
-          <div>
-            <p className="text-lg font-semibold text-white">{card.total}</p>
-            <p className="text-sm font-medium text-white">{card.name}</p>
-          </div>
-          <div>{card.icon}</div>
+      <div className="bg-green-500 p-4 md:p-6 shadow flex justify-between items-center">
+        <div>
+          <p className="text-lg font-semibold text-white">{totalCustomers}</p>
+          <p className="text-sm font-medium text-white">Total customers</p>
         </div>
-      ))}
+        <div>
+          <UsersIcon className="h-6 w-6 text-white" />
+        </div>
+      </div>
+      <div className="bg-indigo-500 p-4 md:p-6 shadow flex justify-between items-center">
+        <div>
+          <p className="text-lg font-semibold text-white">{totalBrands}</p>
+          <p className="text-sm font-medium text-white">Total Brands</p>
+        </div>
+        <div>
+          <CheckBadgeIcon className="h-6 w-6 text-white" />
+        </div>
+      </div>
+      <div className="bg-red-500 p-4 md:p-6 shadow flex justify-between items-center">
+        <div>
+          <p className="text-lg font-semibold text-white">{totalProducts}</p>
+          <p className="text-sm font-medium text-white">Total Products</p>
+        </div>
+        <div>
+          <ChartBarIcon className="h-6 w-6 text-white" />
+        </div>
+      </div>
+      <div className="bg-blue-500 p-4 md:p-6 shadow flex justify-between items-center">
+        <div>
+          <p className="text-lg font-semibold text-white">{totalOrders}</p>
+          <p className="text-sm font-medium text-white">Total Orders</p>
+        </div>
+        <div>
+          <TruckIcon className="h-6 w-6 text-white" />
+        </div>
+      </div>
     </div>
   );
 };
