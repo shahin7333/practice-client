@@ -41,7 +41,7 @@ export const authOptions = {
       if (token) return true;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: 'my_ultra_secure_nextauth_secret'
 };
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
