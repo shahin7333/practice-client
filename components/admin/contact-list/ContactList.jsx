@@ -44,16 +44,16 @@ const ContactList = ({ contactData }) => {
                 </tr>
               </thead>
               <tbody className="">
-                {contactData.map((person) => (
+                {contactData?.map((person) => (
                   <tr key={person._id} className="even:bg-gray-50">
                     <td className="whitespace-nowrap py-2.5 px-4 text-xs font-medium text-gray-900">
-                      {person.email}
+                      {person?.email}
                     </td>
                     <td className="whitespace-nowrap py-3 px-4 text-xs text-gray-500">
-                      {person.phone}
+                      {person?.phone}
                     </td>
                     <td className="py-3 px-4 text-xs text-gray-500 max-w-[500px]">
-                      {person.msg}
+                      {person?.msg}
                     </td>
                   </tr>
                 ))}
