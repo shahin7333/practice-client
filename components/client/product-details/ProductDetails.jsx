@@ -41,11 +41,14 @@ const ProductDetails = ({ data }) => {
       <div className="mx-auto p-4 sm:p-6 lg:p-8 xl:p-20 lg:max-w-[1440px]">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           <img
-            src={`http://localhost:4000/images/` + data.image}
+            src={
+              data?.image
+                ? `http://localhost:4000/images/` + data.image
+                : "/assets/default-image.jpg"
+            }
             alt=""
             className="max-h-[500px] w-full object-cover object-center"
           />
-
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
             <h1 className="text-2xl font-semibold tracking-tight text-gray-900">
               {data.product_name}
