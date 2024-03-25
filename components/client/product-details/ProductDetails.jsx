@@ -32,7 +32,7 @@ const ProductDetails = ({ data }) => {
             toast.success(res.data.message);
             router.push("/cart");
           })
-      : toast.error("Please login first");
+      : toast.error("Please, login first");
     setCount(count + 1);
   };
 
