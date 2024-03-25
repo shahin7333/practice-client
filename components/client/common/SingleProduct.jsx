@@ -11,7 +11,7 @@ const SingleProduct = ({ product }) => {
         <img
           src={`http://localhost:4000/images/`+product.image}
           alt={product?.product_name}
-          className="h-full w-full object-cover object-center"
+          className="h-64 w-full object-cover object-center"
         />
       </div>
       <div className="p-4 text-center">

@@ -21,8 +21,9 @@ const Products = ({ categories, brands, allProducts }) => {
     price: "",
     quantity: "",
     description: "",
-    // image: null
+    image: null,
   });
+  console.log("from", formData);
   const [editFormData, setEditFormData] = useState({
     product_name: "",
     category: "",
@@ -30,7 +31,7 @@ const Products = ({ categories, brands, allProducts }) => {
     price: "",
     quantity: "",
     description: "",
-    image: null,
+    // image: null
   });
   console.log("fh:", editFormData);
   const handleEdit = (
@@ -85,12 +86,12 @@ const Products = ({ categories, brands, allProducts }) => {
     }
   };
 
-  const handleEditFileChange = (e) => {
-    setEditFormData({
-      ...editFormData,
-      file: e.target.files[0],
-    });
-  };
+  // const handleEditFileChange = (e) => {
+  //   setEditFormData({
+  //     ...editFormData,
+  //     file: e.target.files[0],
+  //   });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,7 +103,7 @@ const Products = ({ categories, brands, allProducts }) => {
     productData.append("price", formData.price);
     productData.append("quantity", formData.quantity);
     productData.append("description", formData.description);
-    // productData.append('image', formData.image)
+    productData.append("image", formData.image);
 
     await axiosInstance
       .post("/products", productData, {
@@ -154,7 +155,7 @@ const Products = ({ categories, brands, allProducts }) => {
         price: editFormData.price,
         description: editFormData.description,
         quantity: editFormData.quantity,
-        file: editFormData.file,
+        // file: editFormData.file,
       })
       .then((res) => {
         toast.success(res.data.message);
@@ -166,7 +167,7 @@ const Products = ({ categories, brands, allProducts }) => {
           price: "",
           quantity: "",
           description: "",
-          file: null,
+          // file: null,
         });
       })
       .catch((err) => {
@@ -367,10 +368,10 @@ const Products = ({ categories, brands, allProducts }) => {
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
-              {/* <div>
+              <div>
                 <p className="text-xs mb-1">File</p>
                 <input type="file" name="image" onChange={handleChange} />
-              </div> */}
+              </div>
             </div>
             <div className="w-full mt-4">
               <p className="text-xs mb-1">Description</p>
@@ -496,7 +497,7 @@ const Products = ({ categories, brands, allProducts }) => {
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
                 />
               </div>
-              <div>
+              {/* <div>
                 <p className="text-xs mb-1">File</p>
                 <input
                   id="file"
@@ -506,7 +507,7 @@ const Products = ({ categories, brands, allProducts }) => {
                   onChange={handleEditFileChange}
                   className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400 cursor-pointer"
                 />
-              </div>
+              </div> */}
             </div>
             <div className="flex justify-center gap-2 mt-4">
               <button
