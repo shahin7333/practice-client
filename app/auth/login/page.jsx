@@ -1,5 +1,4 @@
 'use client'
-
 import { redirect } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import Login from '../../../components/client/auth/Login'
