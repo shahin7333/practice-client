@@ -104,8 +104,7 @@ const ProductDetails = ({ data }) => {
                         className="prose prose-sm pb-6"
                       >
                         <ul role="list" className="flex flex-col gap-2 text-sm">
-                          <li>Quantity: {data?.quantity}</li>
-                          <li>Stock In: {data?.stock}</li>
+                          <li>Stock In: {data?.quantity}</li>
                           <li>Brand Name: {data?.brand?.brand_name}</li>
                         </ul>
                       </Disclosure.Panel>
