@@ -319,6 +319,9 @@ const Products = ({ categories, brands, allProducts }) => {
                   value={formData.category}
                   onChange={handleInputChange}
                 >
+                  <option value="" disabled selected>
+                    Select a category
+                  </option>
                   {categories?.map((item) => (
                     <option key={item._id} value={item._id}>
                       {item.category_name}
@@ -335,6 +338,9 @@ const Products = ({ categories, brands, allProducts }) => {
                   value={formData.brand}
                   onChange={handleInputChange}
                 >
+                  <option value="" disabled selected>
+                    Select a brand
+                  </option>
                   {brands?.map((item) => (
                     <option key={item._id} value={item._id}>
                       {item.brand_name}
@@ -425,6 +431,7 @@ const Products = ({ categories, brands, allProducts }) => {
               </div>
               <div>
                 <p className="text-xs mb-1">Category Name</p>
+                <option value="" disabled selected>Select a category</option>
                 <select
                   id="category"
                   name="category"
@@ -441,6 +448,7 @@ const Products = ({ categories, brands, allProducts }) => {
               </div>
               <div>
                 <p className="text-xs mb-1">Brand Name</p>
+                <option value="" disabled selected>Select a brand</option>
                 <select
                   id="brand"
                   name="brand"
