@@ -148,6 +148,7 @@ const FAQ = ({ faqs }) => {
                 id="description"
                 name="description"
                 type="text"
+                rows={7}
                 required
                 value={faqForm.description}
                 onChange={handleChange}
