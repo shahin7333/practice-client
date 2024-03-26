@@ -4,7 +4,9 @@ import {
   ClipboardDocumentListIcon,
   DocumentArrowUpIcon,
   HomeIcon,
+  InboxStackIcon,
   ListBulletIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 
 export const adminSidebarData = [
@@ -50,7 +52,7 @@ export const adminSidebarData = [
   },
   {
     name: "Orders",
-    icon: CircleStackIcon,
+    icon: InboxStackIcon,
     subPath: [
       {
         name: "Order List",
@@ -65,6 +67,16 @@ export const adminSidebarData = [
       {
         name: "Contact List",
         href: "/admin/contact-list",
+      },
+    ],
+  },
+  {
+    name: "FAQ",
+    icon: QuestionMarkCircleIcon,
+    subPath: [
+      {
+        name: "FAQ List",
+        href: "/admin/faq-list",
       },
     ],
   },
