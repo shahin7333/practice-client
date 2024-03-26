@@ -3,35 +3,14 @@ import toast from "react-hot-toast";
 import React, { useState } from "react";
 import CommonModal from "../common/CommonModal";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import axiosInstance from "../../../services/axiosInstance";
 
-const FAQ = () => {
-  const faqData = [
-    {
-      _id: 1,
-      title:
-        "Hello fa jfsdq sfads fadasdf afdsasd fasdf fsdasdff fasdf fsdasdf",
-      desc: "Here will be description.",
-    },
-    {
-      _id: 2,
-      title: "Hello faq",
-      desc: "Here will be description.",
-    },
-    {
-      _id: 3,
-      title: "Hello faq",
-      desc: "Here will be description.",
-    },
-    {
-      _id: 4,
-      title: "Hello faq",
-      desc: "Here will be description.",
-    },
-  ];
+const FAQ = ({ faqs }) => {
   const [open, setOpen] = useState(false);
+  const [faqData, setFaqData] = useState(faqs);
   const [faqForm, setFaqForm] = useState({
     title: "",
-    desc: "",
+    description: "",
   });
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteFaqId, setDeleteFaqId] = useState(null);
@@ -47,14 +26,36 @@ const FAQ = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", faqForm);
-    setOpen(false);
+    axiosInstance
+      .post("/faqs", faqForm)
+      .then((res) => {
+        setFaqData(res.data.payload.faqs);
+        toast.success(res.data.message);
+        setOpen(false);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
-
-  const handleDeleteFaq = (item) => {
+  const handleDelete = (item) => {
+    setDeleteOpen(true);
     setDeleteFaqId(item._id);
     setDeleteFaqTitle(item.title);
-    setDeleteOpen(true);
+  };
+
+  const handleDeleteFaq = () => {
+    axiosInstance
+      .delete(`/faqs/${deleteFaqId}`)
+      .then((res) => {
+        setFaqData(res.data.payload.faqs);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setDeleteOpen(false);
+      });
   };
 
   return (
@@ -108,11 +109,11 @@ const FAQ = () => {
                         {item.title}
                       </td>
                       <td className=" py-2.5 px-4 text-sm text-gray-700 w-[60%]">
-                        {item.desc}
+                        {item.description}
                       </td>
                       <td className="py-3 px-4 flex gap-2 justify-center">
                         <div
-                          onClick={() => handleDeleteFaq(item)}
+                          onClick={() => handleDelete(item)}
                           className="text-red-500 hover:text-red-600 cursor-pointer"
                         >
                           <TrashIcon className="h-4 w-4" />
@@ -144,11 +145,11 @@ const FAQ = () => {
             <div>
               <p className="text-xs mb-1">FAQ description</p>
               <textarea
-                id="desc"
-                name="desc"
+                id="description"
+                name="description"
                 type="text"
                 required
-                value={faqForm.desc}
+                value={faqForm.description}
                 onChange={handleChange}
                 className="block w-full border outline-none px-4 text-sm py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400"
               />
@@ -191,7 +192,7 @@ const FAQ = () => {
               </button>
               <button
                 type="submit"
-                onClick={() => handleDeleteFaq(deleteFaqId)}
+                onClick={handleDeleteFaq}
                 className="flex justify-center bg-red-500 px-6 py-1.5 text-sm font-semibold leading-6 text-white focus:outline-none"
               >
                 Confirm
