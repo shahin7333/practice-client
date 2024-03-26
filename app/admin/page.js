@@ -14,7 +14,7 @@ const DashboardPage = () => {
   return (
     <>
       <Card />
-      <AdminTable />
+      {/* <AdminTable /> */}
     </>
   );
 };

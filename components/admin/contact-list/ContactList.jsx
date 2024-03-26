@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import { useState } from "react";
 
 const ContactList = ({ contactData }) => {
-  console.log("d,", contactData);
   return (
     <div className="mt-6">
       <div className="sm:flex sm:items-center">
